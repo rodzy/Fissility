@@ -26,9 +26,12 @@
   },
   "homepage": "https://github.com/rodzy/fissility#readme",
   "devDependencies": {
+    "eslint": "^7.8.0",
     "jest": "^26.4.2"
   },
   "dependencies": {
-    "inquirer": "^7.3.3"
+    "fs-extra": "^9.0.1",
+    "inquirer": "^7.3.3",
+    "ora": "^5.0.0"
   }
 }
