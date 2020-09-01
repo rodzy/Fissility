@@ -1,0 +1,27 @@
+{
+  "name": "fissility-cli",
+  "version": "1.0.0",
+  "description": "A CLI tool to overbuild your React app just the way you wanted, with updated dependencies all the time at low cost",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodzy/fissility.git"
+  },
+  "keywords": [
+    "CLI",
+    "React",
+    "Tooling",
+    "Prototyping",
+    "TypeScript",
+    "JavaScript"
+  ],
+  "author": "Isaac Rodríguez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rodzy/fissility/issues"
+  },
+  "homepage": "https://github.com/rodzy/fissility#readme"
+}
