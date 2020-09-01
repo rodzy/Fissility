@@ -4,7 +4,8 @@
   "description": "A CLI tool to overbuild your React app just the way you wanted, with updated dependencies all the time at low cost",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/rodzy/fissility/issues"
   },
-  "homepage": "https://github.com/rodzy/fissility#readme"
+  "homepage": "https://github.com/rodzy/fissility#readme",
+  "devDependencies": {
+    "jest": "^26.4.2"
+  }
 }
