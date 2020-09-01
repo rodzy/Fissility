@@ -1,11 +1,16 @@
 const inquirer = require("inquirer");
-const questions = require('./interactive/questions')
+const questions = require('./interactive/questions');
+const optional = require("./interactive/optional");
 
 const introQuestions = () => {
     const message = "Welcome to Fissility ✨\nThe friendly CLI to prototype your React apps faster"
     console.log(message)
-
-    return inquirer.prompt(questions);
+    const prompt = inquirer.prompt(questions).then(answers => {
+        if (answers.appRouter) {
+            inquirer.prompt(optional)
+        }
+    })
+    return prompt;
 };
 
 introQuestions();

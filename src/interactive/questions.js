@@ -16,6 +16,11 @@ const questions = [
             "Create-React-App (Default CRA TypeScript)",
         ],
     },
+    {
+        type: "confirm",
+        name: "appRouter",
+        message:"Would you like to add routing(react-router-dom by default)",
+    },
 ];
 
 module.exports = questions;
