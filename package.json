@@ -27,5 +27,8 @@
   "homepage": "https://github.com/rodzy/fissility#readme",
   "devDependencies": {
     "jest": "^26.4.2"
+  },
+  "dependencies": {
+    "inquirer": "^7.3.3"
   }
 }
