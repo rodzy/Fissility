@@ -67,7 +67,7 @@ const principalRunner = async () => {
 
   const res = await app.execute(folderName, appDirectory, appType);
 
-  if (!res) {
+  if (res) {
     console.log("❌ There was an error generating your app.".red);
     return process.exit(0);
   }

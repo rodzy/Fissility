@@ -17,10 +17,10 @@ const mainQuestions = async () => {
 
 const createReactAppTS = (appName, appType) => {
   const spinner = ora(
-    `Generating ` + appType.underline.brightYellow + ` @ ` + appName.bold + ``
+    `Generating ` + appType.underline.brightGreen + ` @ ` + appName.bold + ``
   ).start();
-  spinner.color = "cyan";
   spinner.spinner = "dots";
+  spinner.color = "cyan";
   if (appType === "create-react-app (Default)") {
     return new Promise((resolve, reject) => {
       sh.exec(`npx create-react-app ${appName} --template typescript`, () => {
@@ -53,4 +53,5 @@ const createReactAppTS = (appName, appType) => {
 exports.execute = async (appName, appDirectory, appType) => {
   const preferedConfig = await mainQuestions();
   await createReactAppTS(appName, appType);
+  return true
 };

@@ -17,7 +17,7 @@ const mainQuestions = async () => {
 
 const createReactAppJS = (appName, appType) => {
   const spinner = ora(
-    `Generating ` + appType.underline.brightYellow + ` @ ` + appName.bold + ``
+    `Generating ` + appType.underline.brightGreen + ` @ ` + appName.bold + ``
   ).start();
   spinner.spinner = "dots";
   spinner.color = "cyan";
@@ -53,4 +53,5 @@ const createReactAppJS = (appName, appType) => {
 exports.execute = async (appName, appDirectory, appType) => {
   const preferedConfig = await mainQuestions();
   await createReactAppJS(appName, appType);
+  return true;
 };
