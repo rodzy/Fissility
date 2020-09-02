@@ -50,13 +50,11 @@ const principalRunner = async () => {
   const { appName,appLanguage } = answer;
 
   if (!appName || appName.length <= 0) {
-    console.log(`The application name is required ❌`.red);
+    console.log(`❌ The name for the app is required.`.red);
     return process.exit(0);
   }
 
   const folderName = await convertAppName(appName);
-
-  console.log(folderName);
 
   const app = mainConfig[appLanguage];
 
@@ -67,16 +65,16 @@ const principalRunner = async () => {
       return process.exit(0);
     }
 
-  // const appDirectory = `${process.cwd()}/${folderName}`;
+  const appDirectory = `${process.cwd()}/${folderName}`;
 
-  // const res = await app.create(folderName, appDirectory);
+  const res = await app.execute(folderName, appDirectory);
 
-  // if (!res) {
-  //   console.log("There was an error generating your app.".red);
-  //   return process.exit(0);
-  // }
+  if (!res) {
+    console.log("❌ There was an error generating your app.".red);
+    return process.exit(0);
+  }
 
-  // return process.exit(0);
+  return process.exit(0);
 };
 
 principalRunner();
