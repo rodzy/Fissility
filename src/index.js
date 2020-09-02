@@ -47,7 +47,7 @@ const mainConfig = {
 
 const principalRunner = async () => {
   const answer = await principalQuestions();
-  const { appName,appLanguage } = answer;
+  const { appName, appType, appLanguage } = answer;
 
   if (!appName || appName.length <= 0) {
     console.log(`❌ The name for the app is required.`.red);
@@ -58,16 +58,14 @@ const principalRunner = async () => {
 
   const app = mainConfig[appLanguage];
 
-    if (!app) {
-      console.log(
-        `App type: ${appLanguage} is not yet supported by this CLI tool.`.red
-      );
-      return process.exit(0);
-    }
+  if (!app) {
+    console.log(`${appLanguage} is not yet supported by this CLI tool.`.red);
+    return process.exit(0);
+  }
 
   const appDirectory = `${process.cwd()}/${folderName}`;
 
-  const res = await app.execute(folderName, appDirectory);
+  const res = await app.execute(folderName, appDirectory, appType);
 
   if (!res) {
     console.log("❌ There was an error generating your app.".red);
@@ -78,4 +76,3 @@ const principalRunner = async () => {
 };
 
 principalRunner();
-

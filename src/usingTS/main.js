@@ -15,13 +15,15 @@ const mainQuestions = async () => {
   return configs;
 };
 
-const createReactAppTS = (appName) => {
-  const spinner = ora(`Running ${appName}...`).start();
+const createReactAppTS = (appName,appType) => {
+  const spinner = ora(
+    `Generating ` + appType.underline.brightYellow + ` @ ` + appName.bold + ``
+  ).start();
   spinner.color = "cyan";
   spinner.succeed();
 };
 
-exports.execute = async (appName, appDirectory) => {
+exports.execute = async (appName, appDirectory,appType) => {
   const preferedConfig = await mainQuestions();
-  await createReactAppTS(appName);
+  await createReactAppTS(appName,appType);
 };
