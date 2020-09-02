@@ -53,5 +53,7 @@ const createReactAppJS = (appName, appType) => {
 exports.execute = async (appName, appDirectory, appType) => {
   const preferedConfig = await mainQuestions();
   await createReactAppJS(appName, appType);
+  
+  console.log(`✅ Created ${appType} on ${appName}`)
   return true;
 };
