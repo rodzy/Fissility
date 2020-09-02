@@ -1,6 +1,7 @@
 require("colors");
 const inquirer = require("inquirer");
-const setup = require("./setup/main");
+const jsSetup = require("./usingJS/main");
+const tsSetup = require("./usingTS/main");
 
 const principalQuestions = () => {
   const message =
@@ -40,8 +41,8 @@ const convertAppName = (appName) => {
 };
 
 const mainConfig = {
-  JavaScript: setup,
-  TypeScript: "Starting your React TypeScript App.....".green
+  JavaScript: jsSetup,
+  TypeScript: tsSetup,
 };
 
 const principalRunner = async () => {
@@ -57,16 +58,14 @@ const principalRunner = async () => {
 
   console.log(folderName);
 
-  console.log(mainConfig[appLanguage])
+  const app = mainConfig[appLanguage];
 
-  // const app = mainConfig[appLanguage];
-
-    // if (!app) {
-    //   console.log(
-    //     `App type: ${appLanguage} is not yet supported by this CLI tool.`.red
-    //   );
-    //   return process.exit(0);
-    // }
+    if (!app) {
+      console.log(
+        `App type: ${appLanguage} is not yet supported by this CLI tool.`.red
+      );
+      return process.exit(0);
+    }
 
   // const appDirectory = `${process.cwd()}/${folderName}`;
 
