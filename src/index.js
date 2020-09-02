@@ -1,5 +1,6 @@
 require("colors");
 const inquirer = require("inquirer");
+const setup = require("./setup/main");
 
 const principalQuestions = () => {
   const message =
@@ -16,11 +17,15 @@ const principalQuestions = () => {
       name: "appType",
       message: "Select your type of React app",
       choices: [
-        "create-react-app JavaScript (Default)",
-        "create-react-app TypeScript (Default)",
-        "create-react-app JavaScript (Using webpack⚡)",
-        "create-react-app TypeScript (Using webpack⚡)",
+        "create-react-app (Default)",
+        "create-react-app (Using webpack⚡)",
       ],
+    },
+    {
+      type: "list",
+      name: "appLanguage",
+      message: "Select the language of preference",
+      choices: ["JavaScript", "TypeScript"],
     },
   ];
   return inquirer.prompt(questions);
@@ -34,9 +39,14 @@ const convertAppName = (appName) => {
   return dirName;
 };
 
+const mainConfig = {
+  JavaScript: setup,
+  TypeScript: "Starting your React TypeScript App.....".green
+};
+
 const principalRunner = async () => {
   const answer = await principalQuestions();
-  const { appName } = answer;
+  const { appName,appLanguage } = answer;
 
   if (!appName || appName.length <= 0) {
     console.log(`The application name is required ❌`.red);
@@ -47,38 +57,28 @@ const principalRunner = async () => {
 
   console.log(folderName);
 
-  const app = "appDict[appType];";
+  console.log(mainConfig[appLanguage])
 
-//   if (!app) {
-//     console.log(
-//       `App type: ${appType} is not yet supported by this CLI tool.`.red
-//     );
-//     return process.exit(0);
-//   }
+  // const app = mainConfig[appLanguage];
 
-  const appDirectory = `${process.cwd()}/${folderName}`;
+    // if (!app) {
+    //   console.log(
+    //     `App type: ${appLanguage} is not yet supported by this CLI tool.`.red
+    //   );
+    //   return process.exit(0);
+    // }
 
-  const res = await app.create(folderName, appDirectory);
+  // const appDirectory = `${process.cwd()}/${folderName}`;
 
-  if (!res) {
-    console.log("There was an error generating your app.".red);
-    return process.exit(0);
-  }
+  // const res = await app.create(folderName, appDirectory);
 
-  return process.exit(0);
+  // if (!res) {
+  //   console.log("There was an error generating your app.".red);
+  //   return process.exit(0);
+  // }
+
+  // return process.exit(0);
 };
 
 principalRunner();
 
-
-// inquirer.prompt([
-//     /* Pass your questions in here */
-// ]).then((answers) => {
-//     // Use user feedback for... whatever!!
-// }).catch((error) => {
-//     if (error.isTtyError) {
-//         // Prompt couldn't be rendered in the current environment
-//     } else {
-//         // Something else when wrong
-//     }
-// });
