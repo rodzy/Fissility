@@ -21,19 +21,10 @@ const createReactAppJS = appName => {
     spinner.color='cyan'
 }
 
-const createReactAppTS = appName => {
-    const spinner = ora(`Running ${appName}...`).start();
-    spinner.color = 'cyan'
-    spinner.succeed()
-    
-}
 
 exports.execute = async (appName, appDirectory, appLanguage) => {
     const preferedConfig = await mainQuestions();
-    if (appLanguage === 'JavaScript') {
-        await createReactAppJS(appName)
-    } else {
-        await createReactAppTS(appName)
-    }
+    await createReactAppJS(appName)
+   
 
 } 
