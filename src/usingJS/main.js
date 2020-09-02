@@ -19,7 +19,35 @@ const createReactAppJS = (appName, appType) => {
   const spinner = ora(
     `Generating ` + appType.underline.brightYellow + ` @ ` + appName.bold + ``
   ).start();
+  spinner.spinner = "dots";
   spinner.color = "cyan";
+  if (appType === "create-react-app (Default)") {
+    return new Promise((resolve, reject) => {
+      sh.exec(`npx create-react-app ${appName}`, () => {
+        const redirect = sh.cd(appName);
+        if (redirect.code !== 0) {
+          console.log(`❌ Error while searching for ${appName}`.red);
+          reject();
+        }
+        spinner.succeed();
+        resolve();
+      });
+    });
+  } else if (appType === "create-react-app (Using webpack⚡)") {
+    // Using the CRA template for now
+    // @TODO: Using javascript webpack template for use on _mocks_
+    return new Promise((resolve, reject) => {
+      sh.exec(`npx create-react-app ${appName}`, () => {
+        const redirect = sh.cd(appName);
+        if (redirect.code !== 0) {
+          console.log(`❌ Error while searching for ${appName}`.red);
+          reject();
+        }
+        spinner.succeed();
+        resolve();
+      });
+    });
+  }
 };
 
 exports.execute = async (appName, appDirectory, appType) => {
