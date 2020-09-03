@@ -28,6 +28,12 @@ const principalQuestions = () => {
       message: "Select the language of preference",
       choices: ["JavaScript", "TypeScript"],
     },
+    {
+      type: "list",
+      name: "appManager",
+      message: "Which package manager do you want to use",
+      choices: ["npm", "yarn"],
+    },
   ];
   return inquirer.prompt(questions);
 };
@@ -47,7 +53,7 @@ const mainConfig = {
 
 const principalRunner = async () => {
   const answer = await principalQuestions();
-  const { appName, appType, appLanguage } = answer;
+  const { appName, appType, appLanguage, appManager } = answer;
 
   if (!appName || appName.length <= 0) {
     console.log(`❌ The name for the app is required.`.red);
@@ -65,7 +71,7 @@ const principalRunner = async () => {
 
   const appDirectory = `${process.cwd()}/${folderName}`;
 
-  const res = await app.execute(folderName, appDirectory, appType);
+  const res = await app.execute(folderName, appDirectory, appType,appManager);
 
   if (res) {
     console.log("❌ There was an error generating your app.".red);
