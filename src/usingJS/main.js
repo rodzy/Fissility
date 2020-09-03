@@ -16,6 +16,7 @@ const mainQuestions = async () => {
     message: config.question,
     choices: ["yes", "no"],
   }));
+  if(questions.)
   const aswers = await inquirer.prompt(questions);
   configs.push(aswers);
   return configs;
