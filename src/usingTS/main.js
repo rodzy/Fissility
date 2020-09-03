@@ -15,9 +15,11 @@ const mainQuestions = async () => {
   return configs;
 };
 
-const createReactAppTS = (appName, appType, appManager) => {
+const createReactAppTS = (appName, appType, appLanguage, appManager) => {
+  console.log("\n");
   const spinner = ora(
-    `✨ Generating a ` + appType.underline.brightGreen + ` @ ` + appName.bold + ``
+    `✨ Generating a ${appType.underline.brightGreen} in a directory called ${appName.bold} 
+    \n\n> Using: ${appLanguage.cyan} as a programming language.\n${appManager}`
   ).start();
   spinner.spinner = "dots";
   spinner.color = "cyan";
@@ -32,8 +34,11 @@ const createReactAppTS = (appName, appType, appManager) => {
               console.log(`❌ Error while searching for ${appName}`.red);
               reject();
             }
-            spinner.succeed();
-            resolve();
+            if (resolve()) {
+              spinner.succeed();
+            } else {
+              spinner.fail();
+            }
           }
         );
       });
@@ -45,8 +50,11 @@ const createReactAppTS = (appName, appType, appManager) => {
             console.log(`❌ Error while searching for ${appName}`.red);
             reject();
           }
-          spinner.succeed();
-          resolve();
+          if (resolve()) {
+            spinner.succeed();
+          } else {
+            spinner.fail();
+          }
         });
       });
     }
@@ -60,17 +68,32 @@ const createReactAppTS = (appName, appType, appManager) => {
           console.log(`❌ Error while searching for ${appName}`.red);
           reject();
         }
-        spinner.succeed();
-        resolve();
+        if (resolve()) {
+          spinner.succeed();
+        } else {
+          spinner.fail();
+        }
       });
     });
   }
 };
 
-exports.execute = async (appName, appDirectory, appType, appManager) => {
+exports.execute = async (
+  appName,
+  appDirectory,
+  appType,
+  appLanguage,
+  appManager
+) => {
   const preferedConfig = await mainQuestions();
-  await createReactAppTS(appName, appType, appManager);
+  await createReactAppTS(appName, appType, appLanguage, appManager);
 
   console.log(`✅ Created ${appType} on ${appName}`);
   return true;
 };
+
+process.on("SIGINT", function () {
+  console.log("\nCancelled the app generation (CTRL+C was pressed)".inverse);
+  // some other closing procedures go here
+  process.exit(1);
+});

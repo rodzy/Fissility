@@ -71,14 +71,25 @@ const principalRunner = async () => {
 
   const appDirectory = `${process.cwd()}/${folderName}`;
 
-  const res = await app.execute(folderName, appDirectory, appType,appManager);
+  const res = await app.execute(
+    folderName,
+    appDirectory,
+    appType,
+    appLanguage,
+    appManager
+  );
 
-  if (res) {
+  if (!res) {
     console.log("❌ There was an error generating your app.".red);
     return process.exit(0);
   }
 
   return process.exit(0);
 };
-
 principalRunner();
+
+process.on("SIGTERM", function () {
+  console.log("\nCancelled the app generation (CTRL+C was pressed)".italic);
+  // some other closing procedures go here
+  process.exit(1);
+});
