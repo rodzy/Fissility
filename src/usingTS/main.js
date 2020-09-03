@@ -17,9 +17,10 @@ const mainQuestions = async () => {
 
 const createReactAppTS = (appName, appType, appLanguage, appManager) => {
   console.log("\n");
+  const route = `${(process.cwd() + "\\" + appName).bold.cyan}`;
   const spinner = ora(
-    `✨ Generating a ${appType.underline.brightGreen} in a directory called ${appName.bold} 
-    \n\n> Using: ${appLanguage.cyan} as a programming language.\n${appManager}`
+    `✨ Generating a ${appType.underline.brightGreen} in a directory called ${route}
+    \n\nUsing:\n> ${appLanguage.cyan} as a programming language.\n> ${appManager.cyan} as package manager.\n`
   ).start();
   spinner.spinner = "dots";
   spinner.color = "cyan";
