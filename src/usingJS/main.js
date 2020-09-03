@@ -4,12 +4,18 @@ const inquirer = require("inquirer");
 const fse = require("fs-extra");
 const set = require("lodash.set");
 const ora = require("ora");
+const settings = require("./configs");
 
 sh.config.silent = true;
 
 const mainQuestions = async () => {
   const configs = [];
-  const questions = [];
+  const questions = settings.map((config) => ({
+    type: "confirm",
+    name: config.name,
+    message: config.question,
+    choices: ["yes", "no"],
+  }));
   const aswers = await inquirer.prompt(questions);
   configs.push(aswers);
   return configs;
@@ -25,20 +31,37 @@ const createReactAppJS = (appName, appType, appLanguage, appManager) => {
   spinner.spinner = "dots";
   spinner.color = "cyan";
   if (appType === "create-react-app (Default)") {
-    return new Promise((resolve, reject) => {
-      sh.exec(`npx create-react-app ${appName}`, () => {
-        const redirect = sh.cd(appName);
-        if (redirect.code !== 0) {
-          console.log(`❌ Error while searching for ${appName}`.red);
-          reject();
-        }
-        if (resolve()) {
-          spinner.succeed();
-        } else {
-          spinner.fail();
-        }
+    if (appManager === "npm") {
+      return new Promise((resolve, reject) => {
+        sh.exec(`npx create-react-app ${appName} --use-npm`, () => {
+          const redirect = sh.cd(appName);
+          if (redirect.code !== 0) {
+            console.log(`❌ Error while searching for ${appName}`.red);
+            reject();
+          }
+          if (resolve()) {
+            spinner.succeed();
+          } else {
+            spinner.fail();
+          }
+        });
       });
-    });
+    } else {
+      return new Promise((resolve, reject) => {
+        sh.exec(`npx create-react-app ${appName} `, () => {
+          const redirect = sh.cd(appName);
+          if (redirect.code !== 0) {
+            console.log(`❌ Error while searching for ${appName}`.red);
+            reject();
+          }
+          if (resolve()) {
+            spinner.succeed();
+          } else {
+            spinner.fail();
+          }
+        });
+      });
+    }
   } else if (appType === "create-react-app (Using webpack⚡)") {
     // Using the CRA template for now
     // @TODO: Using javascript webpack template for use on _mocks_
