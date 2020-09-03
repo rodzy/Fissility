@@ -15,9 +15,11 @@ const mainQuestions = async () => {
   return configs;
 };
 
-const createReactAppJS = (appName, appType) => {
+const createReactAppJS = (appName, appType, appLanguage, appManager) => {
+  console.log("\n");
   const spinner = ora(
-    `Generating ` + appType.underline.brightGreen + ` @ ` + appName.bold + ``
+    `✨ Generating a ${appType.underline.brightGreen} in a directory called ${appName.bold} 
+    \n\n> Using: ${appLanguage.cyan} as a programming language.\n${appManager}`
   ).start();
   spinner.spinner = "dots";
   spinner.color = "cyan";
@@ -29,8 +31,11 @@ const createReactAppJS = (appName, appType) => {
           console.log(`❌ Error while searching for ${appName}`.red);
           reject();
         }
-        spinner.succeed();
-        resolve();
+        if (resolve()) {
+          spinner.succeed();
+        } else {
+          spinner.fail();
+        }
       });
     });
   } else if (appType === "create-react-app (Using webpack⚡)") {
@@ -43,17 +48,31 @@ const createReactAppJS = (appName, appType) => {
           console.log(`❌ Error while searching for ${appName}`.red);
           reject();
         }
-        spinner.succeed();
-        resolve();
+        if (resolve()) {
+          spinner.succeed();
+        } else {
+          spinner.fail();
+        }
       });
     });
   }
 };
 
-exports.execute = async (appName, appDirectory, appType) => {
+exports.execute = async (
+  appName,
+  appDirectory,
+  appType,
+  appLanguage,
+  appManager
+) => {
   const preferedConfig = await mainQuestions();
-  await createReactAppJS(appName, appType);
-  
-  console.log(`✅ Created ${appType} on ${appName}`)
+  await createReactAppJS(appName, appType, appLanguage, appManager);
+
+  console.log(`✅ Created ${appType} on ${appName}`);
   return true;
 };
+
+process.on("SIGINT", function () {
+  console.log("\nCancelled the app generation (CTRL+C was pressed)".inverse);
+  process.exit(1);
+});

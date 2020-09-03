@@ -94,6 +94,5 @@ exports.execute = async (
 
 process.on("SIGINT", function () {
   console.log("\nCancelled the app generation (CTRL+C was pressed)".inverse);
-  // some other closing procedures go here
   process.exit(1);
 });

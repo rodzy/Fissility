@@ -88,8 +88,7 @@ const principalRunner = async () => {
 };
 principalRunner();
 
-process.on("SIGTERM", function () {
+process.on("SIGINT", function () {
   console.log("\nCancelled the app generation (CTRL+C was pressed)".italic);
-  // some other closing procedures go here
   process.exit(1);
 });
