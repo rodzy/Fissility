@@ -1,18 +1,33 @@
 require("colors");
 const sh = require("shelljs");
 const inquirer = require("inquirer");
-const fse = require("fs-extra");
-const set = require("lodash.set");
+// const fse = require("fs-extra");
+// const set = require("lodash.set");
 const ora = require("ora");
+const settings = require("./configs");
 
 sh.config.silent = true;
 
 const mainQuestions = async () => {
-  const configs = [];
-  const questions = [];
-  const aswers = await inquirer.prompt(questions);
-  configs.push(aswers);
-  return configs;
+  const selectedConfigList = [];
+
+  const questions = settings.map((config) => ({
+    type: "confirm",
+    name: config.name,
+    message: config.question,
+  }));
+
+  const answers = await inquirer.prompt(questions);
+
+  settings.forEach((config) => {
+    const matchingAnswer = answers[config.name];
+
+    if (matchingAnswer) {
+      selectedConfigList.push(config);
+    }
+  });
+
+  return selectedConfigList;
 };
 
 const createReactAppTS = (appName, appType, appLanguage, appManager) => {
