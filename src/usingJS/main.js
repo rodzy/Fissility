@@ -91,6 +91,60 @@ const createReactAppJS = (appName, appType, appLanguage, appManager) => {
   }
 };
 
+const installDependencies = async (selectedConfigList, appManager) => {
+  let dependecies = [];
+  let devDependencies = [];
+
+  selectedConfigList.forEach((config) => {
+    dependecies = [...dependecies, ...config.dependecies];
+    devDependencies = [...devDependencies, ...config.devDependencies];
+  });
+
+  await new Promise((resolve) => {
+    const spinner = ora(
+      `✨ Setting up the ${
+        `dependencies`.underline.cyan
+      } for your selected configuration.....\n`
+    ).start();
+    spinner.spinner = "dots";
+    spinner.color = "cyan";
+    if (appManager === "npm") {
+      sh.exec(`npm i --save ${dependecies.join(" ")}`, () => {
+        spinner.succeed();
+        resolve();
+      });
+    } else {
+      sh.exec(`yarn add ${dependecies.join(" ")}`, () => {
+        spinner.succeed();
+        resolve();
+      });
+    }
+  });
+
+  if (devDependencies !== []) {
+    await new Promise((resolve) => {
+      const spinner = ora(
+        `✨ Setting up the ${
+          `dev dependencies`.underline.cyan
+        } for your selected configuration.....\n`
+      ).start();
+      spinner.spinner = "dots";
+      spinner.color = "cyan";
+      if (appManager === "npm") {
+        sh.exec(`npm i --save-dev ${devDependencies.join(" ")}`, () => {
+          spinner.succeed();
+          resolve();
+        });
+      } else {
+        sh.exec(`yarn add -D ${devDependencies.join(" ")}`, () => {
+          spinner.succeed();
+          resolve();
+        });
+      }
+    });
+  }
+};
+
 exports.execute = async (
   appName,
   appDirectory,
@@ -100,6 +154,7 @@ exports.execute = async (
 ) => {
   const preferedConfig = await mainQuestions();
   await createReactAppJS(appName, appType, appLanguage, appManager);
+  await installDependencies(preferedConfig, appManager);
 
   console.log(`✅ Created ${appType} on ${appName}`);
   return true;
