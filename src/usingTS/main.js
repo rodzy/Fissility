@@ -95,11 +95,11 @@ const createReactAppTS = (appName, appType, appLanguage, appManager) => {
 };
 
 const installDependencies = async (selectedConfigList, appManager) => {
-  let dependecies = [];
+  let dependencies = [];
   let devDependencies = [];
 
   selectedConfigList.forEach((config) => {
-    dependecies = [...dependecies, ...config.dependecies];
+    dependencies = [...dependencies, ...config.dependencies];
     devDependencies = [...devDependencies, ...config.devDependencies];
   });
 
@@ -112,12 +112,12 @@ const installDependencies = async (selectedConfigList, appManager) => {
     spinner.spinner = "dots";
     spinner.color = "cyan";
     if (appManager === "npm") {
-      sh.exec(`npm i --save ${dependecies.join(" ")}`, () => {
+      sh.exec(`npm i --save ${dependencies.join(" ")}`, () => {
         spinner.succeed();
         resolve();
       });
     } else {
-      sh.exec(`yarn add ${dependecies.join(" ")}`, () => {
+      sh.exec(`yarn add ${dependencies.join(" ")}`, () => {
         spinner.succeed();
         resolve();
       });
