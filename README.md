@@ -1,5 +1,9 @@
-# Fissility
+## ⚠ WARNING: THIS REPOSITORY GOT MOVED TO A MONOREPO ⚠
 
-🛠⚠ A CLI tool to overbuild your React app just the way you wanted, with updated dependencies all the time at low cost
+<p align="center">
+<img src="https://media.giphy.com/media/l41lXRD8SbgUsNKPS/giphy.gif" />
+</p>
 
-<!--https://en.wikipedia.org/wiki/Fissile_material--!>
+### Link to the monorepo
+
+https://github.com/rodzy/neutral
